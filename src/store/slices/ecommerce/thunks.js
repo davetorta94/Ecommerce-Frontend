@@ -1,0 +1,12 @@
+import { setItems, startLoadingItems } from "./ecommerceSlice"
+
+/*ESTO ES UN EJEMPLO DEL PROFE */
+export const getItems = () => {
+    return async(dispatch , getState) => {
+        dispatch( startLoadingItems() );
+
+        //REALIZAR PETICION HTTP puedes hacerlo con fetch o con axios
+        //HE INSTALADO AXIOS
+        //dispatch( setItems() );
+    }
+}
