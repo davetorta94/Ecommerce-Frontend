@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useAuthStore, useForm} from '../../hooks'
 import './LoginPage.css';
+import Swal from 'sweetalert2';
 
 
 const LoginFormFields = {
@@ -16,7 +18,7 @@ const RegisterFormFields = {
 
 export const LoginBody = () => {
 
-    const {startLogin} = useAuthStore();
+    const {startLogin, errorMessage, startRegistry} = useAuthStore();
 
     const {loginEmail, loginPassword, onInputChange: onLoginInputChange} = useForm(LoginFormFields);
     const {registerName, registerEmail, registerPassword, registerConfirmPassword, onInputChange: onRegisterInputChange} = useForm(RegisterFormFields);
@@ -28,8 +30,21 @@ export const LoginBody = () => {
 
     const registerSubmit = (e)=> {
         e.preventDefault();
-        console.log({registerName, registerEmail, registerPassword, registerConfirmPassword});
+        if (registerPassword !== registerConfirmPassword) {
+            Swal.fire('Error en el registro', "Las contraseñas son distintas", "error");
+            return;
+        }
+        startRegistry({name: registerName, email: registerEmail, password: registerPassword});
     }
+
+    useEffect(() => {
+      if ( errorMessage !== undefined ){
+        Swal.fire('Error en la autenticación', errorMessage, 'error');
+      }
+    
+      
+    }, [errorMessage])
+    
 
     
 

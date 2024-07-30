@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import ecommerceApi from "../api/ecommerceApi";
+import { clearErrorMessage, onChecking, onLogin, onLogout } from "../store/slices/auth/authSlice";
 
 
 
@@ -12,15 +13,41 @@ export const useAuthStore = () => {
     const dispatch = useDispatch();
 
     const startLogin = async({email, password}) => {
-        console.log({email, password});
+        
+        dispatch( onChecking() );
 
         try {
 
-            const resp = await ecommerceApi.post('/auth', { email, password });
-            console.log({resp})
+            const {data} = await ecommerceApi.post('/auth', { email, password });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init', new Date().getTime());
+
+            dispatch( onLogin({ name: data.name, uid: data.uid}) );
             
         } catch (error) {
-            console.log({error})
+            dispatch( onLogout('Credenciales Incorrectas') );
+            setTimeout(() => {
+                dispatch( clearErrorMessage() );
+            }, 10);
+        }
+    }
+
+    const startRegistry = async({email, password, name}) => {
+        dispatch( onChecking() );
+
+        try {
+
+            const {data} = await ecommerceApi.post('/auth/new', { email, password, name });
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('token-init', new Date().getTime());
+
+            dispatch( onLogin({ name: data.name, uid: data.uid}) );
+            
+        } catch (error) {
+            dispatch( onLogout( error.response.data?.msg || '') );
+            setTimeout(() => {
+                dispatch( clearErrorMessage() );
+            }, 10);
         }
     }
 
@@ -33,6 +60,7 @@ export const useAuthStore = () => {
 
         //*Métodos
         startLogin,
+        startRegistry,
 
     }
 }
