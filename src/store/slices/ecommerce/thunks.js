@@ -1,6 +1,6 @@
 import { setItems, startLoadingItems } from "./ecommerceSlice"
 
-/*ESTO ES UN EJEMPLO DEL PROFE */
+/*ESTO ES UN EJEMPLO */
 export const getItems = () => {
     return async(dispatch , getState) => {
         dispatch( startLoadingItems() );
