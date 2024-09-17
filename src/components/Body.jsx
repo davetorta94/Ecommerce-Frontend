@@ -1,17 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { TypeAnimation } from 'react-type-animation';
-import { getItems, increment } from '../store/slices/ecommerce';
+//import { getItems } from '../store/slices/ecommerce';
 import { useEffect } from 'react';
 
 export const Body = () => {
 
   //const {ecommerce} = useSelector( state => state.ecommerce);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getItems())
-    
-  }, [])
+  //const dispatch = useDispatch();
+//
+  //useEffect(() => {
+ //   dispatch(getItems())
+ //   
+ // }, [])
   
   return (
     <>
@@ -42,7 +42,7 @@ export const Body = () => {
                    <div className="card-body">
                      <h5 className="card-title">Card title</h5>
                      <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                     <a href="#" className="btn btn-primary" onClick={()=> dispatch(increment())}>Go somewhere</a>
+                     <a href="#" className="btn btn-primary">Go somewhere</a>
                    </div>
                   </div>
                 </div>
