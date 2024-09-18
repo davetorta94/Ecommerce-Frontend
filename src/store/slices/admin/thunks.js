@@ -50,3 +50,18 @@ export const deleteProduct = createAsyncThunk(
     }
   }
 );
+
+export const submitProduct = createAsyncThunk(
+  'admin/submitProduct',
+  async (productData, { rejectWithValue }) => {
+    try {
+      // Realiza la solicitud POST para enviar el producto
+      const response = await ecommerceApi.post('/products', productData); // Ruta de tu API
+      // Retorna los datos del producto si la solicitud es exitosa
+      return response.data;
+    } catch (error) {
+      // Retorna un mensaje de error si la solicitud falla
+      return rejectWithValue(error.response?.data?.message || 'Error al subir el producto');
+    }
+  }
+);

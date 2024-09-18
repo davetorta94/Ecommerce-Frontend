@@ -12,7 +12,7 @@ export const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Thunk para cargar productos
+      // Cargar productos
       .addCase(loadProducts.pending, (state) => {
         state.isLoading = true;
         state.status = 'loading-products';
@@ -27,7 +27,7 @@ export const adminSlice = createSlice({
         state.status = 'error-loading-products';
         state.msg = action.payload || 'Error loading products';
       })
-      // Thunk para crear producto
+      // Crear producto
       .addCase(createProduct.pending, (state) => {
         state.isLoading = true;
         state.status = 'creating-product';
